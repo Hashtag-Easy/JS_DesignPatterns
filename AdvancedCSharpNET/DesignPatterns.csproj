@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <StartupObject>DesignPatterns.Program</StartupObject>
+  </PropertyGroup>
+
+</Project>
