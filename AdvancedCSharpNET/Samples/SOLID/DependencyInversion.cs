@@ -5,7 +5,7 @@ namespace DesignPatterns.Samples.SOLID
 {
     public class SampleWithNonDependencyInversion
     {
-        private ILogger _logger = new Logger();
+        private ILogger _logger = new DbLogger();
 
         public void AddNewElement(ICollection<string> collection)
         {

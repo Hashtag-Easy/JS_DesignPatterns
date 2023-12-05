@@ -2,10 +2,8 @@
 
 namespace DesignPatterns.Samples.SOLID
 {
-    internal interface IMultiFunctionalPriner
+    internal interface IMultiFunctionalPriner : IPrinter, IScanner
     {
-        void Print(byte[] stream);
-        void Scan();
     }
 
 
@@ -23,17 +21,11 @@ namespace DesignPatterns.Samples.SOLID
     }
 
 
-    public class JustALaserPrinter : IMultiFunctionalPriner
+    public class JustALaserPrinter : IPrinter
     {
         public void Print(byte[] stream)
         {
             Console.WriteLine("Laser printing a page");
-        }
-
-        public void Scan()
-        {
-            //Do not use this method
-            throw new NotImplementedException();
         }
     }
 
@@ -47,7 +39,5 @@ namespace DesignPatterns.Samples.SOLID
     {
         void Scan();
     }
-
-
 
 }

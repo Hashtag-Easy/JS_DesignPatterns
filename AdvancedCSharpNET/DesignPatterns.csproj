@@ -4,7 +4,12 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
-    <StartupObject>DesignPatterns.Program</StartupObject>
+    <StartupObject>DesignPatterns.Samples.Patterns.Composite.TestComposite</StartupObject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Unity" Version="5.11.10" />
+    <PackageReference Include="Unity.Abstractions" Version="5.11.7" />
+  </ItemGroup>
 
 </Project>
