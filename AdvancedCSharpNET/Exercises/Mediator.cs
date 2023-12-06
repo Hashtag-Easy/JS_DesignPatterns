@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DesignPatterns.Exercises
 {
@@ -15,29 +11,42 @@ namespace DesignPatterns.Exercises
     Participant 1 broadcasts the value 3. We now have Participant 1 value = 0, Participant 2 value = 3
     Participant 2 broadcasts the value 2. We now have Participant 1 value = 2, Participant 2 value = 3
      */
-    public class Participant
+    public class Participant : IDisposable 
     {
         private readonly Mediator mediator;
         public int Value { get; set; }
 
         public Participant(Mediator mediator)
         {
-            //TODO
+            this.mediator = mediator;
+            this.mediator.Alert += OnAlert;
+
+            this.mediator.Alert += (o, e) => { Console.WriteLine($"My value is {e}"); }; // anonymous method A
+            this.mediator.Alert -= (o, e) => { Console.WriteLine($"My value is {e}"); }; // anonymous method B
+
+            EventHandler<int> someMethod = (o, e) => { Console.WriteLine($"My value is {e}"); };
+            this.mediator.Alert += someMethod; // anonymous method D
+            this.mediator.Alert -= someMethod; // anonymous method D
+
+        }
+        private void OnAlert(object sender, int value)
+        {
+            if (sender != this)
+                Value += value;
         }
 
+        public void Say(int n) => mediator.Broadcast(this, n);
 
-        public void Say(int n)
+        public void Dispose()
         {
-            //TODO
+            this.mediator.Alert -= OnAlert;
+            this.mediator.Alert -= (o, e) => { Console.WriteLine($"My value is {e}"); }; // anonymous method C
         }
     }
 
     public class Mediator
     {
-        public void Broadcast(object sender, int n)
-        {
-            //TODO
-        }
+        public void Broadcast(object sender, int n) => Alert?.Invoke(sender, n);
 
         public event EventHandler<int> Alert;
     }
@@ -53,9 +62,9 @@ namespace DesignPatterns.Exercises
             var p3 = new Participant(mediator);
 
 
-            p1.Say(2);
+            p1.Say(2);  // p1.Value = 0 p2.Value = 2 p3.Value = 2
 
-            p2.Say(4);
+            p2.Say(4); // p1.Value = 4 p2.Value = 2 p3.Value = 6
 
         }
     }

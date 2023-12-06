@@ -19,14 +19,22 @@ namespace DesignPatterns.Samples.Patterns
             Console.ReadKey();
         }
     }
+
+
+    public class ChannnelEventArgs : EventArgs
+        {
+        public string Channel { get; set; }
+    }
     
     class ServerObserver
     {
         private List<IGamer> _gamers;
+        private Dictionary<string, List<IGamer>> _channels;
 
         public ServerObserver()
         {
             _gamers = new List<IGamer>();
+            _channels = new Dictionary<string, List<IGamer>>();
         }
 
         public void Attach(IGamer gamer)
@@ -37,12 +45,34 @@ namespace DesignPatterns.Samples.Patterns
                 SendMessageToAll(string.Format("Player '{0}' joined the game.", gamer.Name));
             }
         }
+        public void Attach(IGamer gamer,string channel)
+        {
+            if (_gamers.Contains(gamer))
+            {
+                if(!_channels.ContainsKey(channel))
+                {
+                    _channels[channel] = new List<IGamer>();
+                }
+
+                _channels[channel].Add(gamer);
+                SendMessageToTeam(string.Format("Player '{0}' joined the channel.", gamer.Name), channel);
+            }
+        }
         public void Detach(IGamer gamer)
         {
             if (_gamers.Contains(gamer))
             {
                 _gamers.Remove(gamer);
                 SendMessageToAll(string.Format("Player '{0}' left the game.", gamer.Name));
+            }
+        }
+
+        public void Detach(IGamer gamer, string channel)
+        {
+            if (_channels.ContainsKey(channel))
+            {
+                if(_channels[channel].Remove(gamer))
+                    SendMessageToTeam(string.Format("Player '{0}' left the channel.", gamer.Name), channel);
             }
         }
 
@@ -57,6 +87,16 @@ namespace DesignPatterns.Samples.Patterns
         public void SendMessageToAll(string msg)
         {
             foreach (var gamer in _gamers)
+            {
+                gamer.ReceiveMessage(msg);
+            }
+        }
+        public void SendMessageToTeam(string msg, string channel)
+        {
+            if (!_channels.TryGetValue(channel, out List<IGamer> value))
+                return;
+
+            foreach (var gamer in value)
             {
                 gamer.ReceiveMessage(msg);
             }
@@ -83,6 +123,7 @@ namespace DesignPatterns.Samples.Patterns
             Console.WriteLine($"Gamer {Name} has new message: {msg}");
         }
     }
+
     class GameWatcher : IGamer
     {
         public string Name { get; private set; }

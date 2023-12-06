@@ -23,11 +23,25 @@ namespace DesignPatterns.Samples.Patterns
     {
         void Execute(object obj);
         void Execute();
+
+        //void UndoExecute();
+
+        //public bool CanExecute { 
+        //    get 
+        //    {
+        //        var copiedText = string.Empty;
+
+        //        return copiedText != string.Empty;
+        //    } 
+        //}
     }
 
     class PasteText : ICommand
     {
         private readonly Document _receiver;
+
+        public int Index { get; set; }
+        public string Text { get; set; }
 
         public PasteText(Document receiver)
         {
@@ -40,7 +54,8 @@ namespace DesignPatterns.Samples.Patterns
         }
         public void Execute(object obj)
         {
-            _receiver.Text += obj;
+            _receiver.Text = _receiver.Text.Insert(Index, Text);
+           // _receiver.Action();
         }
     }
 
@@ -59,6 +74,8 @@ namespace DesignPatterns.Samples.Patterns
         }
         public void Execute(object obj)
         {
+            //save document
+            //and return confirmation message
             _receiver.Action(obj);
         }
     }

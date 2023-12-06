@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.ComponentModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,15 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowVM();
+        }
+
+
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

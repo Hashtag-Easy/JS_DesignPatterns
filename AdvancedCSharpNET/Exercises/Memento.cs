@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DesignPatterns.Exercises
 {
     /*
-     A TokenMachine is in charge of keeping tokens. 
+    A TokenMachine is in charge of keeping tokens. 
     Each Token  is a reference type with a single numerical value. 
     The machine supports adding tokens and, when it does, 
     it returns a memento representing the state of that system at that given time.
@@ -27,7 +27,12 @@ namespace DesignPatterns.Exercises
 
     public class Memento
     {
-        // todo - what would represent state of TokenMachine
+        public List<Token> Tokens { get; set; }
+
+        public Memento(IEnumerable<Token> tokens)
+        {
+            Tokens = tokens.Select(t => new Token(t.Value)).ToList();
+        }
     }
 
     public class TokenMachine
@@ -35,14 +40,15 @@ namespace DesignPatterns.Exercises
         public List<Token> Tokens = new List<Token>();
 
 
-        //public Memento AddToken(Token token)
-        //{
-        //    // todo (yes, please do both overloads)
-        //}
+        public Memento AddToken(Token token)
+        {
+            Tokens.Add(token);
+            return new Memento(Tokens);
+        }
 
         public void Revert(Memento m)
         {
-            // todo
+            Tokens = m.Tokens.Select(t => new Token(t.Value)).ToList();
         }
     }
 }

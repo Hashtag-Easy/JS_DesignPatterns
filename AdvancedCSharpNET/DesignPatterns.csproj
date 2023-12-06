@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
-    <StartupObject>DesignPatterns.Samples.Patterns.CoRTest</StartupObject>
+    <StartupObject>DesignPatterns.Samples.Patterns.Visitor.Demo</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
