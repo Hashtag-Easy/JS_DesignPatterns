@@ -53,9 +53,9 @@ namespace DesignPatterns.Samples.Patterns.Bridge.Solution
 
     public abstract class Shape
     {
-        private readonly GraphicStyle graphicStyle;
+        private readonly IGraphicStyle graphicStyle;
 
-        public Shape(GraphicStyle graphicStyle)
+        public Shape(IGraphicStyle graphicStyle)
         {
             this.graphicStyle = graphicStyle;
         }
@@ -66,7 +66,7 @@ namespace DesignPatterns.Samples.Patterns.Bridge.Solution
 
     public class Triangle : Shape
     {
-        public Triangle(GraphicStyle graphicStyle) : base(graphicStyle)
+        public Triangle(IGraphicStyle graphicStyle) : base(graphicStyle)
         {
             Name = "Triangle";
         }
@@ -74,13 +74,18 @@ namespace DesignPatterns.Samples.Patterns.Bridge.Solution
 
     public class Square : Shape
     {
-        public Square(GraphicStyle graphicStyle) : base(graphicStyle)
+        public Square(IGraphicStyle graphicStyle) : base(graphicStyle)
         {
             Name = "Square";
         }
     }
 
-    public abstract class GraphicStyle
+    public interface IGraphicStyle
+    {
+        string GetDrawing();
+    }
+
+    public abstract class GraphicStyle : IGraphicStyle
     {
         public abstract string GetDrawing();
     }

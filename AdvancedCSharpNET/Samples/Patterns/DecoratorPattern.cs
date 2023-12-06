@@ -23,7 +23,6 @@ namespace DesignPatterns.Samples.Patterns
         }
     }
 
-
     internal abstract class DataSourceDecorator : IDataSource
     {
         private IDataSource _wrapee;
@@ -48,14 +47,16 @@ namespace DesignPatterns.Samples.Patterns
 
         public override void WriteData(object data)
         {
-            //Encypt data before write
+            //Encrypt data before write
             base.WriteData(data);
+            //
+            //
         }
 
         public override object ReadData()
         {
-            //Decrypt data to read it
             return base.ReadData();
+            //Decrypt data to read it
         }
     }
 
@@ -72,8 +73,8 @@ namespace DesignPatterns.Samples.Patterns
 
         public override object ReadData()
         {
-            //Decompress data to read it
             return base.ReadData();
+            //Decompress data to read it
         }
     }
 
@@ -84,6 +85,7 @@ namespace DesignPatterns.Samples.Patterns
         public void Test()
         {
             var encryptor = new EncryptionDecorator(new FileDataSource());
+            
             var encrypAndCompress = new EncryptionDecorator(new CompressionDecorator(new FileDataSource()));
         }
     }

@@ -12,6 +12,7 @@ namespace DesignPatterns.Samples.Patterns
             a.Append("object B");
             a.Append("object C");
             a.Append("object D");
+            
 
             IIterator<string> i = a.CreateIterator();
             Console.WriteLine("Iterating:");
@@ -19,8 +20,12 @@ namespace DesignPatterns.Samples.Patterns
             Console.WriteLine(i.Next());
             var currItem = i.CurrentItem();
             Console.WriteLine("Current: {0}", currItem);
+           
+            
             while (item != null)
             {
+                var current = i.CurrentItem();
+
                 Console.WriteLine(item);
                 item = i.Next();
             }

@@ -31,7 +31,7 @@ namespace DesignPatterns.Samples.Patterns.Proxy
 
         public void Drive()
         {
-            if (driver.Age >= 16)
+            if (driver.Age >= 18)
                 car.Drive();
             else
             {
@@ -47,6 +47,19 @@ namespace DesignPatterns.Samples.Patterns.Proxy
         public Driver(int age)
         {
             Age = age;
+        }
+    }
+
+
+    public class LazyProxyCar : ICar
+    {
+        private Lazy<Car> lazyCar;
+
+        public void Drive()
+        {
+            var car = lazyCar.Value;
+
+            car.Drive();
         }
     }
 

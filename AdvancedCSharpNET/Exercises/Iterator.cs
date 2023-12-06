@@ -27,12 +27,36 @@ namespace DesignPatterns.Exercises
         }
 
         //implement Pre-Order traversal over given tree
-        //public IEnumerable<T> PreOrder
-        //{
-        //    get
-        //    {
-        //        // todo!
-        //    }
-        //}
+        public IEnumerable<T> PreOrder
+        {
+            get
+            {
+                foreach (var node in PreOrderTraverse(this)) 
+                {
+                    yield return node.Value;
+                }
+            }
+        }
+
+
+        private IEnumerable<Node<T>> PreOrderTraverse(Node<T> root)
+        {
+            yield return root;
+
+            if(root.Left != null) 
+            {
+                foreach (var left in PreOrderTraverse(root.Left))
+                {
+                    yield return left;
+                }
+            }
+            if (root.Right != null)
+            {
+                foreach (var right in PreOrderTraverse(root.Right))
+                {
+                    yield return right;
+                }
+            }
+        }
     }
 }

@@ -51,12 +51,12 @@ namespace DesignPatterns.Samples.Patterns
         {
             Number = number;
         }
-
     }
     public interface INumberExpression
     {
         public void Interpret(NumberContext context);
     }
+
     public class NumberExpresion : INumberExpression
     {
         public void Interpret(NumberContext context)
@@ -90,11 +90,11 @@ namespace DesignPatterns.Samples.Patterns
         public static void Main(string[] args)
         {
             var expression = new NumberExpresion();
-            var output = new NumberContext(3456);
+            var input = new NumberContext(3456);
 
-            expression.Interpret(output);
+            expression.Interpret(input);
 
-            string result = output.Result;
+            string result = input.Result;
             Console.WriteLine("The string is:");
             Console.WriteLine(result);
         }

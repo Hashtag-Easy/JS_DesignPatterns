@@ -1,7 +1,80 @@
 ﻿using System;
 
-namespace DesignPatterns.Samples.Patterns
+namespace DesignPatterns.Samples.Patterns.StatePattern
 {
+    #region state object
+    public class Computer
+    {
+        private State _currentState;
+
+        public Computer()
+        {
+            _currentState = new OffState();
+        }
+
+        public void PressPowerButton()
+        {
+            _currentState.PressPowerButton(this);
+        }
+
+        public void SetState(State state)
+        {
+            _currentState = state;
+        }
+    }
+
+    public interface State
+    {
+        void PressPowerButton(Computer computer);
+    }
+
+    public class OnState : State
+    {
+        public void PressPowerButton(Computer computer)
+        {
+            Console.WriteLine("Computer is already on. Going to sleep mode...");
+            computer.SetState(new SleepState());
+        }
+    }
+
+    public class OffState : State
+    {
+        public void PressPowerButton(Computer computer)
+        {
+            Console.WriteLine("Turning on computer...");
+            computer.SetState(new OnState());
+        }
+    }
+
+    public class SleepState : State
+    {
+        public void PressPowerButton(Computer computer)
+        {
+            Console.WriteLine("Waking up computer from sleep mode...");
+            computer.SetState(new OnState());
+        }
+    }
+
+    public class TestState
+    {
+        public static void Main(string[] args)
+        {
+            Computer computer = new Computer();
+
+            // Initial state is Off
+            computer.PressPowerButton(); 
+
+            // State is now On
+            computer.PressPowerButton(); 
+
+            // State is now Sleep
+            computer.PressPowerButton(); 
+        }
+    }
+    #endregion
+
+
+    #region Card state
     internal class Account : IAccount
     {
         private float _cash;
@@ -109,4 +182,6 @@ namespace DesignPatterns.Samples.Patterns
 
         private void AddToBlacklist(){}
     }
+
+    #endregion
 }

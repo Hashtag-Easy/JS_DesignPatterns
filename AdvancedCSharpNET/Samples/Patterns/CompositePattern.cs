@@ -50,7 +50,9 @@ namespace DesignPatterns.Samples.Patterns.Composite
 
             var group = new GraphicObject();
             group.Children.Add(new Circle { Color = "Blue" });
-            group.Children.Add(new Square { Color = "Blue" });
+            var sq = new Square { Color = "Blue" };
+            sq.Children.Add(new Circle { Color = "White" });
+            group.Children.Add(sq);
             drawing.Children.Add(group);
 
             Console.WriteLine(drawing);
